@@ -26,10 +26,10 @@ public class RealtimeEventsServiceV1 {
     private final Map<String, Sinks.Many<ServerSentEvent<InquiryApiResponse>>> sessions;
     private final WebClient webClient;
 
-    @Value("${external.api.start-uri:/start}")
+    @Value("${external.api.start-uri}")
     private String startApiUri;
 
-    @Value("${external.api.status-uri:/status/{trackingId}}")
+    @Value("${external.api.status-uri}")
     private String statusApiUri;
 
     @Value("${polling.intervals}")

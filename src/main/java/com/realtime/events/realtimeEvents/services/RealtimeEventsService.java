@@ -26,10 +26,10 @@ public class RealtimeEventsService {
     private final ScheduledExecutorService scheduler;
     private final WebClient webClient;
 
-    @Value("${external.api.start-uri:/start}")
+    @Value("${external.api.start-uri}")
     private String startApiUri;
 
-    @Value("${external.api.status-uri:/status/{trackingId}}")
+    @Value("${external.api.status-uri}")
     private String statusApiUri;
 
     @Value("${polling.intervals}")

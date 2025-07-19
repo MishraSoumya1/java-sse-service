@@ -2,6 +2,7 @@ package com.realtime.events.realtimeEvents.config;
 
 import com.realtime.events.realtimeEvents.dto.InquiryApiResponse;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -24,6 +25,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 @EnableAsync
 public class RealtimeEventsConfig {
 
+    @Value("${external.api.baseUrl}")
+    private String baseUrl;
+
+
     @Bean(name = "mvcTaskExecutor")
     public AsyncTaskExecutor mvcTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -40,7 +45,7 @@ public class RealtimeEventsConfig {
         return new WebMvcConfigurer() {
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")
+                        .allowedOrigins("http://localhost:5173", "http://localhost:3000")
                         .allowedMethods("*")
                         .allowCredentials(true);
             }
@@ -50,7 +55,7 @@ public class RealtimeEventsConfig {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://jsonplaceholder.typicode.com")
+                .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
